@@ -1,5 +1,6 @@
 #include "implementations.h"
 #include <chrono>
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
@@ -61,5 +62,13 @@ int main() {
     cout << "Jett's performance is " << jettPercentage
          << " times faster than Luke's." << endl;
   }
+  uint64_t lukeMeanOperationDurationNanos =
+      (double)lukeTime.count() / lukeResults.size() * 1000000000;
+  uint64_t jettMeanOperationDurationNanos =
+      (double)jettTime.count() / jettResults.size() * 1000000000;
+  cout << "Luke's mean operation duration: " << lukeMeanOperationDurationNanos
+       << "ns" << endl;
+  cout << "Jett's mean operation duration: " << jettMeanOperationDurationNanos
+       << "ns" << endl;
   return 0;
 }
