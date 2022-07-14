@@ -29,7 +29,7 @@ namespace surd {
     }
 
     struct Surd {
-        unsigned coefficient = 0;
+        unsigned coefficient = 1;
         unsigned radicand = 0;
         std::optional<WorkingStep> workingStep = {};
     };
