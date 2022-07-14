@@ -1,25 +1,20 @@
-//
-// Created by Luke Thompson on 14/7/2022.
-//
-
 #ifndef SURD_SIMPLIFIER_SURD_H
 #define SURD_SIMPLIFIER_SURD_H
-#include <string>
 #include <iostream>
+#include <string>
 
 namespace surd {
 
-    struct Surd {
-        unsigned coefficient;
-        unsigned radicand;
-        std::string message;
-    };
-    static std::ostream& std::ostream::operator<<(const Surd& surd) {
+struct Surd {
+  unsigned coefficient;
+  unsigned radicand;
+  std::string message;
+};
+static std::ostream &operator<<(std::ostream &out, const Surd &surd) {
+    out << "Surd[coefficient=" << surd.coefficient << ", radicand=" << surd.radicand << ", message=" << surd.message << "]";
+    return out;
+}
 
-    }
+} // namespace surd
 
-
-
-} // surd
-
-#endif //SURD_SIMPLIFIER_SURD_H
+#endif // SURD_SIMPLIFIER_SURD_H
