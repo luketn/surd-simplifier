@@ -20,6 +20,8 @@ namespace surd {
         unsigned previousRadicand;
         unsigned squareNumber;
         DivisibilityRule divisibilityRule;
+
+        bool operator==(const WorkingStep &other) const = default;
     };
     static std::ostream &operator<<(std::ostream &out, const WorkingStep &step) {
         out << step.previousRadicand << " was divisible by " << step.squareNumber
@@ -32,6 +34,8 @@ namespace surd {
         unsigned coefficient = 1;
         unsigned radicand = 0;
         std::optional<WorkingStep> workingStep = {};
+
+        bool operator==(const Surd &other) const = default;
     };
 
     static std::ostream &operator<<(std::ostream &out, const Surd &surd) {

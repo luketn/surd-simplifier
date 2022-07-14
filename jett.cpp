@@ -5,7 +5,7 @@
 using namespace surd;
 using namespace std;
 
-optional<Surd> calculateStep(unsigned radicand, unsigned coefficient) {
+static optional<Surd> calculateStep(unsigned radicand, unsigned coefficient) {
   unsigned lastTwoDigits = radicand % 100;
   // Try rule of four.
   if (lastTwoDigits % 4 == 0) {
@@ -63,6 +63,7 @@ optional<Surd> calculateStep(unsigned radicand, unsigned coefficient) {
   return {};
 }
 
+namespace jett {
 vector<Surd> calculateSurds(unsigned radicand) {
   unsigned coefficient = 1;
   vector<Surd> surds;
@@ -91,3 +92,4 @@ int main() {
   }
   return 0;
 }
+} // namespace jett
