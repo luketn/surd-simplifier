@@ -40,16 +40,25 @@ int main() {
   }
   for (unsigned i = 0; i < lukeResults.size(); i++) {
     if (jettResults[i] != lukeResults[i]) {
-        cerr << "OOPS! The results don't match!" << endl;
-        cerr << "Luke's:" << endl;
-        for (const auto &surd : lukeResults[i]) {
-            cerr << surd << endl;
-        }
-        cerr << "Jett's:" << endl;
-        for (const auto &surd : jettResults[i]) {
-            cerr << surd << endl;
-        }
+      cerr << "OOPS! The results don't match!" << endl;
+      cerr << "Luke's:" << endl;
+      for (const auto &surd : lukeResults[i]) {
+        cerr << surd << endl;
+      }
+      cerr << "Jett's:" << endl;
+      for (const auto &surd : jettResults[i]) {
+        cerr << surd << endl;
+      }
     }
+  }
+  double lukePercentage = (double)lukeTime.count() / jettTime.count();
+  double jettPercentage = (double)jettTime.count() / lukeTime.count();
+  if (lukePercentage > 1) {
+    cout << "Luke's performance is " << lukePercentage
+         << " times slower than Jett's." << endl;
+  } else {
+    cout << "Jett's performance is " << jettPercentage
+         << " times faster than Luke's." << endl;
   }
   return 0;
 }
