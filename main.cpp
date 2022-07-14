@@ -12,7 +12,7 @@ vector<Surd> calculateSurds(unsigned radicand) {
     },
             Surd{.coefficient = 2,
                     .radicand = 153,
-                    .workingStep = WorkingStep{.squareNumber = 4, .divisibilityRule = surd::DivisibilityRule::FOUR, .previousRadicand = 612}
+                    .workingStep = WorkingStep{.squareNumber = 4, .divisibilityRule = surd::DivisibilityRule::FOUR, .previousRadicand = radicand}
             },
             Surd{.coefficient = 6,
                     .radicand = 17,
@@ -22,9 +22,10 @@ vector<Surd> calculateSurds(unsigned radicand) {
 }
 
 int main() {
-    int radicand = 612;
-    vector<Surd> surds = calculateSurds(radicand);
+    cout << "Enter a value to simplify the square root: ";
+    int radicand; cin >> radicand;
     cout << "Calculating the simplified surd for the sqrt(" << radicand << ")" << endl;
+    vector<Surd> surds = calculateSurds(radicand);
     for (const auto &surd: surds) {
         if (surd.workingStep) {
             cout << surd << endl;
