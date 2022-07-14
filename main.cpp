@@ -22,7 +22,7 @@ vector<Surd> calculateSurds(unsigned radicand) {
 }
 
 int main() {
-    cout << "Enter a value to simplify the square root: ";
+    cout << "Enter a whole number value to simplify a surd: √";
     int radicand; cin >> radicand;
     cout << "Calculating the simplified surd for the sqrt(" << radicand << ")" << endl;
     vector<Surd> surds = calculateSurds(radicand);
