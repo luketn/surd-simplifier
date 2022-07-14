@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.22)
-project(surd_simplifier C)
+cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_C_STANDARD 20)
+project(surd_simplifier CXX)
 
-include_directories(.)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-add_executable(surd_simplifier
-        Surd.h main.cpp)
+add_executable(surd_simplifier Surd.h main.cpp)
