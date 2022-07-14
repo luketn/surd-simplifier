@@ -11,7 +11,13 @@ struct Surd {
   std::string message;
 };
 static std::ostream &operator<<(std::ostream &out, const Surd &surd) {
-    out << "Surd[coefficient=" << surd.coefficient << ", radicand=" << surd.radicand << ", message=" << surd.message << "]";
+    if (surd.message.length() != 0) {
+        out << surd.message << " ";
+    }
+    if (surd.coefficient > 1) {
+        out << surd.coefficient << "x ";
+    }
+    out << "sqrt(" << surd.radicand << ")";
     return out;
 }
 
