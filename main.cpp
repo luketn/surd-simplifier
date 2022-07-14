@@ -50,10 +50,10 @@ optional<Surd> calculateStep(unsigned radicand, unsigned coefficient) {
   // The rule of trial and error.
   // Odd numbers can't be divided by even ones.
   unsigned increment = radicand % 2 == 1 ? 2 : 1;
-  for (unsigned n = 3; n * n < radicand; n += increment) {
+  for (unsigned n = 3; n * n <= radicand; n += increment) {
     if (radicand % (n * n) == 0) {
       return Surd{.coefficient = n * coefficient,
-                  .radicand = radicand / n * n,
+                  .radicand = radicand / (n * n),
                   .workingStep = WorkingStep{
                       .previousRadicand = radicand,
                       .squareNumber = n * n,
