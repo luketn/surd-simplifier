@@ -18,16 +18,13 @@ namespace surd {
 
     struct WorkingStep {
         unsigned previousRadicand;
-        unsigned coefficient;
         unsigned squareNumber;
-        unsigned radicand;
         DivisibilityRule divisibilityRule;
     };
     static std::ostream &operator<<(std::ostream &out, const WorkingStep &step) {
         out << step.previousRadicand << " was divisible by " << step.squareNumber
             << " (found using the rule of " << divisibilityRuleNames[step.divisibilityRule]
-            << ") to give a simplified surd of " << step.coefficient << " * sqrt("
-            << step.radicand << ")";
+            << ")";
         return out;
     }
 
@@ -39,12 +36,11 @@ namespace surd {
 
     static std::ostream &operator<<(std::ostream &out, const Surd &surd) {
         if (surd.workingStep) {
-            out << surd.workingStep.value() << ": ";
+            out << surd.workingStep.value();
         }
         if (surd.coefficient > 1) {
-            out << surd.coefficient << "x ";
+            out << " giving a simplified surd of " << surd.coefficient << " * sqrt(" << surd.radicand << ")";
         }
-        out << "sqrt(" << surd.radicand << ")";
         return out;
     }
 
