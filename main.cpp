@@ -7,6 +7,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 using std::vector;
+using std::chrono::duration;
 using std::chrono::system_clock;
 
 using namespace surd;
@@ -26,15 +27,15 @@ int main() {
   for (int radicand = 2; radicand <= MAX_RADICAND; radicand++) {
     lukeResults.push_back(luke::calculateSurds(radicand));
   }
-  auto lukeTime = system_clock::now() - lukeStart;
-  cout << "Luke's performance: " << lukeTime.count() << "ns" << endl;
+  duration<double, std::milli> lukeTime = system_clock::now() - lukeStart;
+  cout << "Luke's performance: " << lukeTime.count() << "ms" << endl;
   cout << "Testing jett's performance" << endl;
   auto jettStart = system_clock::now();
   for (int radicand = 2; radicand <= MAX_RADICAND; radicand++) {
     jettResults.push_back(jett::calculateSurds(radicand));
   }
-  auto jettTime = system_clock::now() - jettStart;
-  cout << "Jett's performance: " << jettTime.count() << "ns" << endl;
+  duration<double, std::milli> jettTime = system_clock::now() - jettStart;
+  cout << "Jett's performance: " << jettTime.count() << "ms" << endl;
   if (jettResults.size() != lukeResults.size()) {
     cerr << "OOPS! The sizes don't match!" << endl;
   }
