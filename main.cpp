@@ -4,29 +4,33 @@
 
 #include "surd.h"
 #include <iostream>
+#include <vector>
 
 using namespace surd;
 using namespace std;
 
-int main() {
-    Surd surds[] = {
+vector<Surd> calculateSurds(unsigned radicand) {
+    return {
             {
                     .coefficient=1,
-                    .radicand=612,
-                    .message=""
-
+                    .radicand=radicand
             },
             {
-                .coefficient=2,
-                .radicand=153,
-                .message="612 divisible by first square number 4."
-            },
-            {
-                .coefficient=6,
-                .radicand=17,
-                .message="153 divisible by second square number 9 (rule of 9)."
+                    .coefficient=2,
+                    .radicand=153,
+                    .workingStep={
+                            .previousRadicand=radicand,
+                            .coefficient=2,
+                            .squareNumber=4,
+                            .radicand=153,
+                            .divisibilityRule=DivisibilityRule::FOUR
+                    }
             }
     };
+}
+
+int main() {
+    vector<Surd> surds = calculateSurds(612);
     for (const auto surd: surds) {
         cout << surd << endl;
     }
