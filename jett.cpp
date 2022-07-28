@@ -48,15 +48,32 @@ static optional<Surd> calculateStep(unsigned radicand, unsigned coefficient) {
                                                DivisibilityRule::TWENTY_FIVE}};
   }
   // The rule of trial and error.
-  // Odd numbers can't be divided by even ones.
-  unsigned increment = radicand % 2 == 1 ? 2 : 1;
-  for (unsigned n = 3; n * n <= radicand; n += increment) {
-    if (radicand % (n * n) == 0) {
-      return Surd{.coefficient = n * coefficient,
-                  .radicand = radicand / (n * n),
+  // We only have to check the squares of prime numbers, since (ab)2 = a2b2.
+  // This means that the square of a composite number is divisible by the square
+  // of a prime number.
+  // I couldn't get that to work efficiently so we just use the 6n+1 rule.
+  unsigned squareNumber = 1;
+  for (unsigned n = 1; squareNumber <= radicand; n++) {
+    // 6n + 1 case.
+    unsigned rootNumber = 6 * n - 1;
+    squareNumber = rootNumber * rootNumber;
+    if (radicand % squareNumber == 0) {
+      return Surd{.coefficient = rootNumber * coefficient,
+                  .radicand = radicand / squareNumber,
                   .workingStep = WorkingStep{
                       .previousRadicand = radicand,
-                      .squareNumber = n * n,
+                      .squareNumber = squareNumber,
+                      .divisibilityRule = DivisibilityRule::TRIAL_AND_ERROR}};
+    }
+    // 6n - 1 case.
+    rootNumber = 6 * n + 1;
+    squareNumber = rootNumber * rootNumber;
+    if (radicand % squareNumber == 0) {
+      return Surd{.coefficient = rootNumber * coefficient,
+                  .radicand = radicand / squareNumber,
+                  .workingStep = WorkingStep{
+                      .previousRadicand = radicand,
+                      .squareNumber = squareNumber,
                       .divisibilityRule = DivisibilityRule::TRIAL_AND_ERROR}};
     }
   }
@@ -67,6 +84,7 @@ namespace jett {
 vector<Surd> calculateSurds(unsigned radicand) {
   unsigned coefficient = 1;
   vector<Surd> surds;
+  surds.reserve(8);
   surds.push_back(Surd{.coefficient = 1, .radicand = radicand});
   optional<Surd> nextSurd;
   while ((nextSurd = calculateStep(radicand, coefficient))) {
