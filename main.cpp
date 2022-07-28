@@ -62,13 +62,13 @@ int main() {
     cout << "Jett's performance is " << jettPercentage
          << " times faster than Luke's." << endl;
   }
-  uint64_t lukeMeanOperationDurationNanos =
-      (double)lukeTime.count() / lukeResults.size() * 1000000000;
-  uint64_t jettMeanOperationDurationNanos =
-      (double)jettTime.count() / jettResults.size() * 1000000000;
-  cout << "Luke's mean operation duration: " << lukeMeanOperationDurationNanos
-       << "ns" << endl;
-  cout << "Jett's mean operation duration: " << jettMeanOperationDurationNanos
-       << "ns" << endl;
+  double lukeMeanOperationDurationMillis =
+      (double)lukeTime.count() / lukeResults.size();
+  double jettMeanOperationDurationMillis =
+      (double)jettTime.count() / jettResults.size();
+  cout << "Luke's mean operation duration: " << lukeMeanOperationDurationMillis
+       << "ms" << endl;
+  cout << "Jett's mean operation duration: " << jettMeanOperationDurationMillis
+       << "ms" << endl;
   return 0;
 }
