@@ -7,15 +7,7 @@ using namespace std;
 
 static optional<Surd> testOfFour(unsigned int radicand,
                                  unsigned int previousCoefficient) {
-    string stringRadicand = to_string(radicand);
-    unsigned stringRadicandLength = stringRadicand.length();
-    string lastTwoChars;
-    if (stringRadicandLength >= 2) {
-        lastTwoChars = stringRadicand.substr(stringRadicandLength - 2);
-    } else {
-        lastTwoChars = stringRadicand;
-    }
-    unsigned lastTwo = stoi(lastTwoChars);
+    unsigned lastTwo = radicand % 100;
     if (lastTwo % 4 == 0) {
         // Rule of 4!
         return Surd{.radicand = radicand / 4,
@@ -31,12 +23,9 @@ static optional<Surd> testOfFour(unsigned int radicand,
 
 static optional<Surd> testOfTwentyFive(unsigned int radicand,
                                        unsigned int previousCoefficient) {
-    string stringRadicand = to_string(radicand);
-    unsigned stringRadicandLength = stringRadicand.length();
-    if (stringRadicandLength >= 2) {
-        string lastTwoChars = stringRadicand.substr(stringRadicandLength - 2);
-        if (lastTwoChars == "00" || lastTwoChars == "25" || lastTwoChars == "50" ||
-            lastTwoChars == "75") {
+    if (radicand > 24) {
+        auto lastTwo = radicand % 100;
+        if (lastTwo == 0 || lastTwo == 25 || lastTwo == 50 || lastTwo == 75) {
             // Rule of 25!
             return Surd{.radicand = radicand / 25,
                     .coefficient = 5 * previousCoefficient,
@@ -72,27 +61,31 @@ static optional<Surd> testOfTrialAndError(unsigned int radicand,
 
 static optional<Surd> testOfNine(unsigned int radicand,
                                  unsigned int previousCoefficient) {
-    unsigned int originalRadicand = radicand;
-    while (true) {
-        string stringRadicand = to_string(radicand);
-        unsigned stringRadicandLength = stringRadicand.length();
-        if (stringRadicandLength > 1) {
-            radicand = 0;
-            for (int i = 0; i < stringRadicandLength; i++) {
-                unsigned charInt = stringRadicand[i] - '0';
-                radicand += charInt;
-            }
+
+    unsigned int digitsTotal = 0;
+    bool resolved = false;
+    unsigned int radicandWork = radicand;
+    while (!resolved) {
+        while (radicandWork > 0) {
+            auto workDigit = radicandWork % 10;
+            radicandWork = radicandWork / 10;
+            digitsTotal += workDigit;
+        }
+        if (digitsTotal < 10) {
+            resolved = true;
         } else {
-            break;
+            radicandWork = digitsTotal;
+            digitsTotal = 0;
         }
     }
-    if (radicand == 9) {
-        return Surd{.radicand = originalRadicand / 9,
+    if (digitsTotal == 9) {
+        return Surd{
                 .coefficient = 3 * previousCoefficient,
+                .radicand = radicand / 9,
                 .workingStep = WorkingStep{
+                        .previousRadicand = radicand,
                         .squareNumber = 9,
-                        .divisibilityRule = surd::DivisibilityRule::NINE,
-                        .previousRadicand = originalRadicand}};
+                        .divisibilityRule = surd::DivisibilityRule::NINE}};
     } else {
         return {};
     }
@@ -115,8 +108,9 @@ static optional<Surd> calculateNextSurd(Surd previousSurd) {
 }
 
 namespace luke {
+    vector<Surd> result = {};
     vector<Surd> calculateSurds(unsigned radicand) {
-        vector<Surd> result = {};
+        result.clear();
 
         Surd initialSurd = Surd{.radicand = radicand};
         result.push_back(initialSurd);
@@ -134,22 +128,4 @@ namespace luke {
         return result;
     }
 
-    int main() {
-        cout << "Enter a whole number value to simplify a surd: √";
-        int radicand;
-        cin >> radicand;
-        cout << "Calculating the simplified surd for the sqrt(" << radicand << ")"
-             << endl;
-        vector<Surd> surds = calculateSurds(radicand);
-        if (surds.size() > 1) {
-            for (const auto &surd: surds) {
-                if (surd.workingStep) {
-                    cout << surd << endl;
-                }
-            }
-        } else {
-            cout << "Could not be simplified.";
-        }
-        return 0;
-    }
 } // namespace luke
