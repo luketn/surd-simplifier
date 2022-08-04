@@ -60,7 +60,7 @@ int main() {
          << " times slower than Jett's." << endl;
   } else {
     cout << "Jett's performance is " << jettPercentage
-         << " times faster than Luke's." << endl;
+         << " times slower than Luke's." << endl;
   }
   double lukeMeanOperationDurationMillis =
       (double)lukeTime.count() / lukeResults.size();
